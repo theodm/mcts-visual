@@ -8,6 +8,21 @@
   </head>
   <body>
     <div id="app"></div>
+    
+    <!-- Simple Loading Backdrop -->
+    <div id="loading-backdrop" style="display: none;">
+      <div class="loading-info">
+        <div class="loading-text">MCTS wird ausgeführt.</div>
+        <div class="loading-bar">
+          <div id="loading-progress" class="loading-progress"></div>
+        </div>
+        <div class="loading-stats">
+          <span id="loading-current">0</span> / <span id="loading-total">0</span>
+          (<span id="loading-percent">0%</span>)
+        </div>
+      </div>
+    </div>
+    
     <script type="module" src="/src/main.ts"></script>
     
     <div id="controls">

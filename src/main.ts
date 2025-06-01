@@ -322,7 +322,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   let all_states: MCTSStepResult[] = [];
 
+  // Show loading backdrop
+  const loadingBackdrop = document.getElementById('loading-backdrop')!;
+  const loadingCurrent = document.getElementById('loading-current')!;
+  const loadingTotal = document.getElementById('loading-total')!;
+  const loadingPercent = document.getElementById('loading-percent')!;
+  const loadingProgress = document.getElementById('loading-progress')!;
+
+  loadingBackdrop.style.display = 'flex';
+  loadingTotal.textContent = iterations.toString();
+
   let i = 0;
+  let lastIteration = 0;
+  
   while (true) {
     const next = search.next();
 
@@ -331,14 +343,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     const stepResult = next.value;
-
     all_states.push(stepResult);
+
+    // Update loading display based on iteration number
+    if (stepResult.iteration !== lastIteration) {
+      lastIteration = stepResult.iteration;
+      const progress = Math.min((stepResult.iteration / iterations) * 100, 100);
+      loadingCurrent.textContent = stepResult.iteration.toString();
+      loadingPercent.textContent = `${Math.round(progress)}%`;
+      loadingProgress.style.width = `${progress}%`;
+    }
 
     i++;
     if (i % 50 === 0) {
       console.log(`Processed ${i} steps`);
+      // Allow UI to update by yielding control
+      await new Promise(resolve => setTimeout(resolve, 0));
     }
   }
+  
+  // Hide loading backdrop
+  loadingBackdrop.style.display = 'none';
+  
   console.log(`Total steps processed: ${i}`);
 
   let currentState: MCTSStepResult = all_states[0];
