@@ -19,7 +19,7 @@ function render(
 
   const svg = d3
     .select(container)
-    .select('svg');
+    .select('svg') as d3.Selection<SVGSVGElement, unknown, null, undefined>;
 
   const width = 800;
   const height = 1400;
@@ -40,16 +40,16 @@ function render(
   d3
     .tree<TreeNode>().nodeSize([200, 160])(root);
 
-  let g = svg.select('g.main-group');
+  let g = svg.select('g.main-group') as d3.Selection<SVGGElement, unknown, null, undefined>;
 
   if (g.empty()) {
     g = svg.append('g').attr('class', 'main-group');
 
-    const zoom = d3.zoom()
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
       .on('start', () => svg.style('cursor', 'grabbing'))
       .on('end', () => svg.style('cursor', 'grab'))
       .on('zoom', ({ transform }) => {
-        g.attr('transform', transform);
+        g.attr('transform', transform.toString());
         currentTransform = transform;
         console.log('Zoom transform updated:', currentTransform); 
       });
@@ -62,15 +62,15 @@ function render(
 
     // (svg.call as any)(d3.zoom().transform, currentTransform);
   } else {
-    g.attr('transform', currentTransform);
+    g.attr('transform', currentTransform.toString());
     g.selectAll('*').remove();
   }
 
-  const links = g.selectAll('.link')
+  g.selectAll('.link')
     .data(root.links())
     .join('path')
     .attr('class', 'link')
-    .attr('d', d3.linkVertical()
+    .attr('d', d3.linkVertical<d3.HierarchyLink<TreeNode>, d3.HierarchyNode<TreeNode>>()
       .x((d: any) => d.x)
       .y((d: any) => d.y)
     )
@@ -227,7 +227,7 @@ function render(
     });
 
 
-  nodes.each(function (d, i) {
+  nodes.each(function (d) {
     const node = d3.select(this);
     const originalData = state;
 
@@ -299,10 +299,6 @@ function findNodeByPath(node: TreeNode, path: number[]): TreeNode | null {
   }
 
   return null;
-}
-
-async function delay(ms: number): Promise<void> {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
