@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MCTS Visualizer</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+    
+    <div id="controls">
+      <div class="control-section">
+        <div id="buttons">
+          <button id="backward_end" title="Zum Anfang (Home)">|‹</button>
+          <button id="backward_iter" title="Vorherige Iteration (Ctrl+←)">‹‹</button>
+          <button id="backward" title="Einen Schritt zurück (←)">‹</button>
+          <button id="forward" title="Einen Schritt vor (→)">›</button>
+          <button id="forward_iter" title="Nächste Iteration (Ctrl+→)">››</button>
+          <button id="forward_end" title="Zum Ende (End)">›|</button>
+        </div>
+      </div>
+
+      <div class="control-section">
+        <div class="status-grid">
+          <div class="status-item">
+            <span class="status-label">Iteration</span>
+            <div id="iteration-status">0 / 0</div>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Schritt</span>
+            <div id="step-status">0 / 0</div>
+          </div>
+          <div class="status-item full-width">
+            <span class="status-label">Phase</span>
+            <div id="status3">Start</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-section info-section">
+        <h3>Shortcuts</h3>
+        <div class="shortcuts">
+          <div class="shortcut">
+            <div class="keys">
+              <span class="key">←</span>
+              <span class="key">→</span>
+            </div>
+            <span class="desc">Schritt vor/zurück</span>
+          </div>
+          <div class="shortcut">
+            <div class="keys">
+              <span class="key">Ctrl</span>
+              <span class="key-separator">+</span>
+              <span class="key">←</span>
+              <span class="key">→</span>
+            </div>
+            <span class="desc">Iteration vor/zurück</span>
+          </div>
+          <div class="shortcut">
+            <div class="keys">
+              <span class="key">Home</span>
+              <span class="key">End</span>
+            </div>
+            <span class="desc">Anfang/Ende</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="control-section info-section">
+        <h3>Parameter</h3>
+        <div class="parameters">
+          <div class="parameter">
+            <span class="param">?iterations=1000</span>
+            <span class="desc">MCTS-Iterationen</span>
+          </div>
+          <div class="parameter">
+            <span class="param">?startState=---XOX---</span>
+            <span class="desc">Start-Zustand</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
